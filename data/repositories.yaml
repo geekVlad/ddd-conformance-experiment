@@ -1,0 +1,197 @@
+schema_version: 1
+selection_policy:
+  languages: [php, typescript, python]
+  design: "For each language: five repositories spanning reference-positive, application-scale and framework-oriented DDD/CQRS implementations."
+  exclusions: [generated code, dependencies, tests, build outputs]
+analysis_environment:
+  python: 3.12.3
+  virtual_environment: .venv-experiment
+  result_pattern: results/{repository_id}-py312.json
+repositories:
+  - id: sylius
+    language: php
+    role: production_like
+    url: https://github.com/Sylius/Sylius.git
+    commit: 70cf6ca686ec3efa4635a451bdd2b1358ab71d42
+    licence: MIT
+    licence_evidence: src/Sylius/Component/Order/LICENSE
+    ddd_evidence: "Commerce components such as Order, Product, Customer, Payment, Promotion and Shipping contain domain models, factories, repository interfaces, state transitions and domain events; Symfony bundles are separated from reusable components."
+    corpus_status: accepted_pilot
+    raw_result: results/sylius-pilot.json
+    pilot_summary: {files_analyzed: 3746, parse_errors: 0, classes: 2492}
+    caveat: "Components are not automatically equivalent to bounded contexts; framework bundles and interfaces require stratified analysis."
+
+  - id: symfony-ddd-hexarch-cqrs
+    language: php
+    role: reference_positive
+    url: https://github.com/masfernandez/symfony-ddd-hexarch-cqrs.git
+    commit: ae7ff7c9ca9370408725bb0ac60f5b23783ba528
+    licence: MIT
+    licence_evidence: LICENSE.txt
+    ddd_evidence: "README explicitly describes DDD, Hexagonal Architecture and CQRS; Auth, Backoffice/Catalog, Management and Shared modules contain Application, Domain and Infrastructure layers."
+    corpus_status: accepted_pilot
+    raw_result: results/symfony-ddd-hexarch-cqrs-pilot.json
+    pilot_summary: {files_analyzed: 201, parse_errors: 0, classes: 157}
+    caveat: "Compact educational/reference project; useful as a positive control but not as sole industrial evidence."
+
+  - id: bitloops-ddd
+    language: typescript
+    role: reference_positive
+    url: https://github.com/bitloops/ddd-hexagonal-cqrs-es-eda.git
+    commit: c05b2dee2ea5d74c8ad2e39d658317fd67aff988
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "README documents Event Storming and IAM, Todo and Marketing bounded contexts; code contains entities, value objects, business rules, domain events, CQRS, event sourcing and infrastructure adapters."
+    corpus_status: accepted_pilot
+    raw_result: results/bitloops-ddd-pilot.json
+    pilot_summary: {files_analyzed: 241, parse_errors: 0, classes: 137}
+    caveat: "Reference implementation with a comparatively simple Todo core domain."
+
+  - id: finance-project-ddd
+    language: typescript
+    role: medium_realistic
+    url: https://github.com/4lessandrodev/finance-project-ddd.git
+    commit: 9f0725a83be4863db3da230e3bf9c5fa3f6c9a7d
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "Budget-box, transaction and user modules are divided into domain, application and infrastructure and include aggregates, value objects, domain services, domain events and repository interfaces."
+    corpus_status: accepted_pilot
+    raw_result: results/finance-project-ddd-pilot.json
+    pilot_summary: {files_analyzed: 192, parse_errors: 0, classes: 115}
+    caveat: "Inactive since 2022; module boundaries are not accompanied by a formal context map."
+
+  - id: python-ddd
+    language: python
+    role: reference_positive
+    url: https://github.com/pgorecki/python-ddd.git
+    commit: 429cd4b1ffed571ccd845e64f05b484f4f8c52ac
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "Auction application with Event Storming, a context map, Catalog/Listing, Bidding and Payment bounded contexts, and explicit application, domain and infrastructure layers."
+    corpus_status: accepted_pilot
+    raw_result: results/python-ddd-pilot.json
+    pilot_summary: {files_analyzed: 108, parse_errors: 0, classes: 121}
+    caveat: "Demonstration project that may be cleaner than typical production systems."
+
+  - id: openvair
+    language: python
+    role: production_like
+    url: https://github.com/Aerodisk/openvair.git
+    commit: 26c441e319eaa6a895dbe395fb6ec9ba88194d02
+    licence: Apache-2.0
+    licence_evidence: LICENSE
+    ddd_evidence: "Production-oriented virtual-infrastructure platform split into modules such as backup, network, storage, virtual machines and volume, commonly with domain, service_layer, adapters, repositories and unit of work."
+    corpus_status: accepted_pilot
+    raw_result: results/openvair-pilot.json
+    pilot_summary: {files_analyzed: 417, parse_errors: 0, classes: 563}
+    caveat: "Modules are bounded-context-like rather than formally documented bounded contexts; substantial systems/infrastructure code is present."
+
+  - id: php-ddd-example
+    language: php
+    role: parser_validation_only
+    url: https://github.com/CodelyTV/php-ddd-example.git
+    commit: 9271c467943f835ab3b6e5ba30bdbd710aca9d73
+    licence: null
+    ddd_evidence: "README explicitly describes Hexagonal Architecture, DDD, CQRS and bounded contexts."
+    corpus_status: excluded
+    exclusion_reason: "No explicit licence file found in the checked-out revision."
+    raw_result: results/php-ddd-example-pilot-cli.json
+
+  - id: proophessor-do
+    language: php
+    role: reference_positive
+    url: https://github.com/prooph/proophessor-do.git
+    commit: ae43d6d12eb3cc57ab1e812bc99f2f6556427ad5
+    licence: BSD-3-Clause
+    licence_evidence: LICENSE
+    ddd_evidence: "Todo-list business application whose README explicitly identifies CQRS and Event Sourcing; source contains application and domain code."
+    corpus_status: accepted_expansion
+    caveat: "Educational CQRS/Event-Sourcing reference; inactive and not evidence of current industrial practice."
+
+  - id: explicit-architecture-php
+    language: php
+    role: reference_positive
+    url: https://github.com/hgraca/explicit-architecture-php.git
+    commit: 6cb053e709146a1374bc35cbc690700f10b4dff1
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "Symfony application demonstrator of Explicit Architecture with explicit dependency-layer rules and source, configuration and test structure."
+    corpus_status: accepted_expansion
+    caveat: "Architecture-focused demo; its DDD/CQRS evidence is weaker than a domain-specific production system."
+
+  - id: php-engine
+    language: php
+    role: framework
+    url: https://github.com/event-engine/php-engine.git
+    commit: 272d63e5c62eb329f05ce54fdddd0276b29ed443
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "README explicitly identifies a PHP CQRS/EventSourcing framework and describes a path toward richer domain models."
+    corpus_status: accepted_expansion
+    caveat: "Framework code is analyzed as a distinct stratum, not as an end-user business application."
+
+  - id: domain-driven-hexagon
+    language: typescript
+    role: reference_positive
+    url: https://github.com/Sairyss/domain-driven-hexagon.git
+    commit: 5c2d15a7e2d69e83dfddf28468ee9f30e02c30de
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "TypeScript/NestJS reference covers DDD, hexagonal architecture, commands, queries, ports, aggregates, events, value objects and invariants."
+    corpus_status: accepted_expansion
+    caveat: "Educational/recommendation-oriented reference rather than a deployed business product."
+
+  - id: ultimate-backend
+    language: typescript
+    role: medium_realistic
+    url: https://github.com/juicycleff/ultimate-backend.git
+    commit: 0ae62a4b894c0e46baf75228ec88fae98f6abe06
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "Enterprise-scale TypeScript backend explicitly documents DDD, CQRS, event sourcing and multiple service contexts."
+    corpus_status: accepted_expansion
+    caveat: "Work-in-progress/proof-of-concept signals mean production maturity must not be assumed."
+
+  - id: fastify-boilerplate
+    language: typescript
+    role: reference_positive
+    url: https://github.com/marcoturi/fastify-boilerplate.git
+    commit: 0bcca6669ec36acde54a7b714d20a766d4758891
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "Fastify TypeScript application explicitly combines clean architecture, CQRS, DDD and vertical slices with boundary validation and tests."
+    corpus_status: accepted_expansion
+    caveat: "Generic boilerplate; domain semantics may be thinner than in a business-specific application."
+
+  - id: fastapi-clean-example
+    language: python
+    role: medium_realistic
+    url: https://github.com/ivan-borovets/fastapi-clean-example.git
+    commit: 927172311ec272ee3894619d91008a1b3403bc75
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "FastAPI backend contains domain entities, ports, unit-of-work abstractions and separated command/query code."
+    corpus_status: accepted_expansion
+    caveat: "Repository README states that a refactor is in progress; evaluate the pinned code rather than relying on current documentation."
+
+  - id: python-ddd-example
+    language: python
+    role: reference_positive
+    url: https://github.com/otsobide/python-ddd-example.git
+    commit: 18ad8952a1f745953be858d90da1a433f0934b08
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "FastAPI example explicitly uses DDD and CQRS, with bounded contexts, aggregates, repositories and domain events."
+    corpus_status: accepted_expansion
+    caveat: "Educational example; retain as a positive control rather than production evidence."
+
+  - id: enforcer-clean-architecture
+    language: python
+    role: reference_positive
+    url: https://github.com/Enforcer/clean-architecture.git
+    commit: f0c1c0a8364996d309e7381b44933807529200b1
+    licence: MIT
+    licence_evidence: LICENSE
+    ddd_evidence: "Auction-domain reference has explicit domain, application and infrastructure layers, use cases, repository abstractions and domain events."
+    corpus_status: accepted_expansion
+    caveat: "Book-companion/reference implementation; clean-architecture evidence is stronger than explicit DDD labelling."

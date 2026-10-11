@@ -1,0 +1,21 @@
+project: ddd-conformance-corpus-pilot
+version: v1-glossary
+allowed_rule_ids:
+  - domain-imports-infrastructure
+  - domain-transport-type
+architecture:
+  domain_paths: ["**/domain/**", "**/Domain/**"]
+  exclusions: ["**/tests/**", "**/Test/**", "**/Tests/**", "**/behat/**", "**/fixtures/**"]
+rules:
+  - id: domain-imports-infrastructure
+    decision: "confirmed unless the supplied policy explicitly allow-lists the dependency as a port, Shared Kernel, ACL, or test/support code"
+  - id: domain-transport-type
+    decision: "uncertain unless the supplied policy explicitly classifies the type as a Domain concept rather than a transport DTO"
+glossary:
+  - term: Dto
+    context: budget-box
+    type: domain_service_input_contract
+    classification: domain_concept
+    source: "src/modules/budget-box/domain/services/can-allocate-percentage-to-budget-box.domain-service.ts:6-17; the same local interface pattern occurs in domain services, while application use cases import dedicated *.dto files."
+shared_kernel: []
+allow_list: []

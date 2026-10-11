@@ -1,0 +1,33 @@
+[project]
+name = "ddd-conformance-experiment"
+version = "0.1.0"
+description = "Reproducible multi-language experiment for DDD conformance metrics"
+requires-python = ">=3.11"
+dependencies = [
+  "tree-sitter-language-pack>=0.9.0",
+  "PyYAML>=6.0.2",
+]
+
+[project.scripts]
+ddd-analyze = "ddd_conformance.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3.0",
+  "pytest-cov>=6.0.0",
+  "ruff>=0.11.0",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ddd_conformance"]

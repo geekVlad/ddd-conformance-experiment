@@ -1,0 +1,19 @@
+rules:
+  - id: ddd-domain-imports-infrastructure
+    languages: [generic]
+    severity: WARNING
+    message: Domain code directly references an infrastructure-oriented namespace or module; review the dependency direction.
+    paths:
+      include:
+        - "**/domain/**"
+        - "**/Domain/**"
+    pattern-regex: "(?i)^(?:from\\s+[A-Za-z0-9_./\\\\]+(?:infrastructure|infra|adapter|adapters|persistence)[A-Za-z0-9_./\\\\]*\\s+import|import\\s+[A-Za-z0-9_./\\\\]+(?:infrastructure|infra|adapter|adapters|persistence)[A-Za-z0-9_./\\\\]*|use\\s+[A-Za-z0-9_\\\\]+(?:Infrastructure|Infra|Adapter|Adapters|Persistence)[A-Za-z0-9_\\\\]*)"
+  - id: ddd-domain-transport-type
+    languages: [generic]
+    severity: INFO
+    message: Domain path contains a transport-oriented type name; review role placement before treating it as a DDD violation.
+    paths:
+      include:
+        - "**/domain/**"
+        - "**/Domain/**"
+    pattern-regex: "(?i)^(?:class|interface)\\s+[A-Za-z0-9_]*(?:Controller|Dto|DTO|Request|Response)\\b"

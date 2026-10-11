@@ -1,0 +1,14 @@
+project: ddd-conformance-corpus-pilot
+allowed_rule_ids:
+  - domain-imports-infrastructure
+  - domain-transport-type
+architecture:
+  domain_paths: ["**/domain/**", "**/Domain/**"]
+  exclusions: ["**/tests/**", "**/Test/**", "**/Tests/**", "**/behat/**", "**/fixtures/**"]
+rules:
+  - id: domain-imports-infrastructure
+    decision: "confirmed unless the supplied policy explicitly allow-lists the dependency as a port, Shared Kernel, ACL, or test/support code"
+  - id: domain-transport-type
+    decision: "uncertain unless the supplied policy explicitly classifies the type as a Domain concept rather than a transport DTO"
+shared_kernel: []
+allow_list: []

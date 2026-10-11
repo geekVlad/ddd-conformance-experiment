@@ -1,0 +1,14 @@
+project: fixture-ddd-project
+allowed_rule_ids:
+  - domain-import-infrastructure
+architecture:
+  domain:
+    - src/domain
+  application:
+    - src/application
+  infrastructure:
+    - src/infrastructure
+shared_kernel: []
+allow_list: []
+exclusions:
+  - tests/**

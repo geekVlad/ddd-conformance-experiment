@@ -1,0 +1,7 @@
+{
+  "rule_id": "domain-import-infrastructure",
+  "path": "src/domain/order.py",
+  "line": 12,
+  "snippet": "from app.infrastructure.sql import OrderStore",
+  "dependency": "app.infrastructure.sql.OrderStore"
+}

@@ -1,0 +1,43 @@
+# Version this file with the repository it governs.
+project: <repository-id>
+revision: <immutable-commit-sha>
+contexts:
+  - name: <bounded-context>
+    domain_paths: ["src/<context>/Domain"]
+    application_paths: ["src/<context>/Application"]
+    infrastructure_paths: ["src/<context>/Infrastructure"]
+ports: []
+glossary:
+  terms: []
+  sources: []
+shared_kernel: []
+acl: []
+allow_list: []
+exclusions:
+  - "**/tests/**"
+  - "**/Test/**"
+  - "**/Tests/**"
+  - "**/fixtures/**"
+  - "**/vendor/**"
+rules:
+  - id: domain-imports-infrastructure
+    expected: forbidden
+    exceptions: [port, shared_kernel, acl]
+  - id: domain-transport-type
+    expected: review
+    requires_explicit_classification: true
+  - id: cross-context-import
+    expected: forbidden
+    exceptions: [shared_kernel, published_language, acl]
+tools:
+  semgrep:
+    rule_pack: tools/semgrep/ddd-boundaries.yml
+  deptrac:
+    enabled_for: [php]
+    config: deptrac.php
+llm_adjudication:
+  allowed_rule_ids: [domain-imports-infrastructure, domain-transport-type, cross-context-import]
+  model: gpt-4o-mini
+  temperature: 0
+  max_candidates_per_run: 3
+  uncertain_is_violation: false
